@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('description');
+            $table->double('price');
+            $table->string('currency');
             $table->string('count');
             $table->string('unit');
             $table->string('version');

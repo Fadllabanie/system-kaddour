@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ClientOrder extends Model
+class ProductPrice extends Model
 {
     use HasFactory;
 
-    const PEYMENT = 'cash';
+    public $guarded = [];
+
 }
