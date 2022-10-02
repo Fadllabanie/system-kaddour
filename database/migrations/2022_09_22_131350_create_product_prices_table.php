@@ -15,21 +15,30 @@ return new class extends Migration
     {
         Schema::create('product_prices', function (Blueprint $table) {
             $table->id();
-            $table->double('sp_price');
-            $table->double('dollar_price');
+            $table->unsignedBigInteger('provider_id');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('provider_id')->references('id')->on('providers');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('product_id')->references('id')->on('products');
 
-            $table->double('consumer_price_in_sp');
-            $table->double('consumer_price_in_dollar'); 
+            $table->double('consumer_price_in_sp')->default(0);
+            $table->double('consumer_price_in_dollar')->default(0);
             
-            $table->double('cost_price_in_sp_piece');
-            $table->double('cost_price_in_dollar_piece');
+            $table->double('cost_price_in_sp_piece')->default(0);
+            $table->double('cost_price_in_dollar_piece')->default(0);
 
-            $table->double('cost_price_in_sp_piece');
-            $table->double('cost_price_in_dollar_piece');
+            $table->double('sale_price_in_sp')->default(0);
+            $table->double('sale_price_in_dollar')->default(0);
 
-
-            $table->double('sale_price_in_sp');
-            $table->double('sale_price_in_dollar');
+            $table->double('special_price_in_sp')->default(0);
+            $table->double('special_price_in_dollar')->default(0);
+            
+            $table->double('quantity_price_in_sp')->default(0);
+            $table->double('quantity_price_in_dollar')->default(0);
+            
+            $table->double('half_quantity_price_in_sp')->default(0);
+            $table->double('half_quantity_price_in_dollar')->default(0);
 
             $table->timestamps();
         });

@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('address');
+            $table->string('website');
+            $table->string('whatsapp');
+            $table->string('logo');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('location_id');

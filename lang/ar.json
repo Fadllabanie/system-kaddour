@@ -1,0 +1,27 @@
+{
+    "City" : "مدينه",
+    "Cities" : "المدن",
+    "Countries": "الدوله",
+    "Country": "دوله",
+    "Name" : "اسم",
+    "Enter name here" : "اسم",
+    "Create Country": "انشاء دوله",
+    "Create City": "انشاء مدينه",
+    "Create Location": "انشاء موقع",
+    "View": "عرض",
+    "Edit": "تعديل",
+    "Update date": "تاريخ التحديث",
+    "Actions": "أجراءات",
+    "Displayed records": "السجلات المعروضة",
+    "Locations": "المواقع",
+
+    "First Name": "الاسم الاول",
+    "last Name": "الاسم العائله",
+    "Email": "البريد الالكتدوني ",
+    "Mobile": "رقم الموبايل",
+    "Tel": "رقم التلفون",
+    "Password": "كلمه المرور",
+    "Phone": "رقم التلفون"
+
+
+}

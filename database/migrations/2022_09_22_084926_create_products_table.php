@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('barcode');
             $table->string('model');
             $table->string('made');
+            $table->string('image');
             $table->unsignedBigInteger('provider_id');
             $table->unsignedBigInteger('category_id');
             $table->foreign('provider_id')->references('id')->on('providers');

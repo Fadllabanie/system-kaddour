@@ -24,15 +24,21 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('address');
+            $table->string('logo');
+            $table->string('website');
+            $table->string('whatsapp');
+            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('location_id');
             $table->unsignedBigInteger('client_type_id');
             $table->char('currency');
-            $table->double('lat');
-            $table->double('lng');
+            $table->decimal('lat', 12, 8);
+            $table->decimal('lng', 12, 8);
             $table->string('dealing_way');
             $table->double('dealing_number');
+
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('country_id')->references('id')->on('countries');
             $table->foreign('city_id')->references('id')->on('cities');
             $table->foreign('location_id')->references('id')->on('locations');

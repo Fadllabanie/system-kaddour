@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens;
 
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Actions\Button;
 use Orchid\Support\Facades\Layout;
 
 class PlatformScreen extends Screen
@@ -58,8 +59,18 @@ class PlatformScreen extends Screen
 
             Link::make('GitHub')
                 ->href('https://github.com/orchidsoftware/platform')
-                ->icon('social-github'),
+                ->icon('social-github'), 
+                
+            Button::make(__('Remove'))
+                ->icon('trash')
+                ->method('changeLangrage'),
+                
         ];
+    }
+
+    public function changeLangrage()
+    {
+        
     }
 
     /**
