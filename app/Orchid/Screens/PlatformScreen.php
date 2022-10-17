@@ -49,28 +49,41 @@ class PlatformScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make('Website')
-                ->href('http://orchid.software')
-                ->icon('globe-alt'),
+            // Link::make('Website')
+            //     ->href('http://orchid.software')
+            //     ->icon('globe-alt'),
 
-            Link::make('Documentation')
-                ->href('https://orchid.software/en/docs')
-                ->icon('docs'),
+            // Link::make('Documentation')
+            //     ->href('https://orchid.software/en/docs')
+            //     ->icon('docs'),
 
-            Link::make('GitHub')
-                ->href('https://github.com/orchidsoftware/platform')
-                ->icon('social-github'), 
-                
-            Button::make(__('Remove'))
-                ->icon('trash')
-                ->method('changeLangrage'),
-                
+            // Link::make('GitHub')
+            //     ->href('https://github.com/orchidsoftware/platform')
+            //     ->icon('social-github'), 
+
+            Button::make(__('Language'))
+                ->icon('actual-size')
+                ->method('changeLanguage'),
+
         ];
     }
 
-    public function changeLangrage()
+    public function changeLanguage()
     {
+       
+        $locale = app()->getLocale();
         
+        if ($locale == 'en') {
+            $locale ='ar';
+            app()->setLocale($locale);
+           // dd($locale);
+        }else{
+            app()->setLocale($locale);
+
+        }
+       
+        session()->put('locale', $locale);
+
     }
 
     /**
@@ -81,7 +94,7 @@ class PlatformScreen extends Screen
     public function layout(): iterable
     {
         return [
-            Layout::view('platform::partials.welcome'),
+            //  Layout::view('platform::partials.welcome'),
         ];
     }
 }

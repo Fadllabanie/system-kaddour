@@ -19,7 +19,7 @@ class TagResource extends Resource
     public static $model = \App\Models\Tag::class;
     public static function displayInNavigation(): bool
     {
-        return true;
+        return false;
     }
     public static function perPage(): int
     {

@@ -28,6 +28,11 @@ class Product extends Model
         'updated_at',
     ];
 
+    public function getFullAttribute(): string
+    {
+        return $this->attributes['name'] . ' price (' . $this->attributes['price'] . ')';
+    }
+
     public function provider()
     {
         return $this->belongsTo(Provider::class);
@@ -35,5 +40,9 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'id','unit');
     }
 }

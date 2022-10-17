@@ -9,14 +9,14 @@ use Illuminate\Validation\Rule;
 use Orchid\Screen\Fields\Input;
 use Illuminate\Database\Eloquent\Model;
 
-class ClientTypeResource extends Resource
+class UnitResource extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ClientType::class;
+    public static $model = \App\Models\Unit::class;
     public static function displayInNavigation(): bool
     {
         return false;
@@ -34,8 +34,8 @@ class ClientTypeResource extends Resource
     {
         return [
             Input::make('name')
-            ->title(__('Name'))
-            ->placeholder(__('Enter name here')),
+                ->title('Name')
+                ->placeholder(__('Enter name here')),
         ];
     }
 
@@ -47,12 +47,11 @@ class ClientTypeResource extends Resource
     public function columns(): array
     {
         return [
-            TD::make('id'),
-            TD::make('name',__("Name"))->sort()->filter(TD::FILTER_TEXT),
-
-            TD::make('updated_at', 'Update date')
+            TD::make('id')->sort(),
+            TD::make('name', __("Name"))->sort()->filter(TD::FILTER_TEXT),
+            TD::make('updated_at', __('Update date'))->sort()
                 ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();
+                    return $model->updated_at->diffForHumans();
                 }),
         ];
     }
@@ -69,6 +68,7 @@ class ClientTypeResource extends Resource
             Sight::make('name'),
         ];
     }
+
     public function rules(Model $model): array
     {
         return [
@@ -78,7 +78,6 @@ class ClientTypeResource extends Resource
             ],
         ];
     }
-
     /**
      * Get the filters available for the resource.
      *

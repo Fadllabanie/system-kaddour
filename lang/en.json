@@ -16,6 +16,11 @@
     "Mobile": "Mobile",
     "Tel": "Tel",
     "Password": "Password",
-    "Phone": "Phone"
+    "Phone": "Phone",
 
+    "Category": "Category",
+    "Products": "Products",
+    "Categories": "Categories",
+    "Product": "Product",
+    "Price": "Price"
 }

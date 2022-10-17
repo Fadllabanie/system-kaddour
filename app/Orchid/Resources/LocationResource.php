@@ -22,7 +22,7 @@ class LocationResource extends Resource
     public static $model = \App\Models\Location::class;
     public static function displayInNavigation(): bool
     {
-        return true;
+        return false;
     }
     public static function perPage(): int
     {

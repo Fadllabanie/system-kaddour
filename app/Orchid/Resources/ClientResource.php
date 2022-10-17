@@ -31,7 +31,7 @@ class ClientResource extends Resource
     public static $model = \App\Models\Client::class;
     public static function displayInNavigation(): bool
     {
-        return true;
+        return false;
     }
     public static function perPage(): int
     {

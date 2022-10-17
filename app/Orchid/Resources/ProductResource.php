@@ -7,6 +7,7 @@ use Orchid\Screen\TD;
 use App\Models\Country;
 use App\Models\Category;
 use App\Models\Provider;
+use App\Models\Unit;
 use Orchid\Screen\Sight;
 use Orchid\Crud\Resource;
 use Illuminate\Validation\Rule;
@@ -29,7 +30,7 @@ class ProductResource extends Resource
     public static $model = \App\Models\Product::class;
     public static function displayInNavigation(): bool
     {
-        return true;
+        return false;
     }
     public static function perPage(): int
     {
@@ -89,12 +90,18 @@ class ProductResource extends Resource
                 ->title(__('Count'))
                 ->placeholder(__('Enter count here')),
 
-            Select::make('unit')
-                ->title(__('Unit'))
-                ->options([
-                    'kg'   => 'KG',
-                    'm' => 'M',
-                ]),
+
+            Relation::make('unit')
+            ->fromModel(Unit::class, 'name', 'id')
+            ->empty(__('No select'))
+            ->title(__('Unit')),
+
+            // Select::make('unit')
+            //     ->title(__('Unit'))
+            //     ->options([
+            //         'kg'   => 'KG',
+            //         'm' => 'M',
+            //     ]),
 
             Select::make('currency')
                 ->title(__('Currency'))

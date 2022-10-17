@@ -19,7 +19,7 @@ class CountryResource extends Resource
     public static $model = \App\Models\Country::class;
     public static function displayInNavigation(): bool
     {
-        return true;
+        return false;
     }
     public static function perPage(): int
     {

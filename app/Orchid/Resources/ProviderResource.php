@@ -29,7 +29,7 @@ class ProviderResource extends Resource
     public static $model = \App\Models\Provider::class;
     public static function displayInNavigation(): bool
     {
-        return true;
+        return false;
     }
     public static function perPage(): int
     {
