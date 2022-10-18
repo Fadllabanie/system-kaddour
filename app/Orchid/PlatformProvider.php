@@ -61,9 +61,9 @@ class PlatformProvider extends OrchidServiceProvider
             //     ->icon('layers')
             //     ->route('platform.example.layouts'),
 
-            // Menu::make('Chart tools')
-            //     ->icon('bar-chart')
-            //     ->route('platform.example.charts'),
+            Menu::make('Chart tools')
+                ->icon('bar-chart')
+                ->route('platform.example.charts'),
 
             // Menu::make('Cards')
             //     ->icon('grid')
@@ -83,8 +83,8 @@ class PlatformProvider extends OrchidServiceProvider
             //         return Dashboard::version();
             //     }, Color::DARK()),
 
-        
-                Menu::make(__('Users'))
+
+            Menu::make(__('Users'))
                 ->icon('user')
                 ->route('platform.systems.users')
                 ->permission('platform.systems.users')

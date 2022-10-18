@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Orchid\Screens;
 
 use Orchid\Screen\Screen;
-use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Actions\Button;
 use Orchid\Support\Facades\Layout;
+use App\Orchid\Layouts\ChartsLayout;
+use App\Orchid\Layouts\Examples\ChartBarExample;
+use App\Orchid\Layouts\Examples\ChartLineExample;
 
 class PlatformScreen extends Screen
 {
@@ -28,7 +29,7 @@ class PlatformScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Get Started';
+        return 'Get Started !!';
     }
 
     /**
@@ -49,21 +50,11 @@ class PlatformScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make('Website')
-                ->href('http://orchid.software')
-                ->icon('globe-alt'),
-
-            Link::make('Documentation')
-                ->href('https://orchid.software/en/docs')
-                ->icon('docs'),
-
-            Link::make('GitHub')
-                ->href('https://github.com/orchidsoftware/platform')
-                ->icon('social-github'), 
+     
                 
-            Button::make(__('Remove'))
-                ->icon('trash')
-                ->method('changeLangrage'),
+            // Button::make(__('Remove'))
+            //     ->icon('trash')
+            //     ->method('changeLangrage'),
                 
         ];
     }
@@ -81,7 +72,11 @@ class PlatformScreen extends Screen
     public function layout(): iterable
     {
         return [
-            Layout::view('platform::partials.welcome'),
+            // Layout::view('platform::partials.welcome'),
+            Layout::columns([
+                ChartLineExample::class,
+                ChartBarExample::class,
+            ]),
         ];
     }
 }
