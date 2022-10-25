@@ -13,9 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('app_settings', function (Blueprint $table) {
+        Schema::create('sells', function (Blueprint $table) {
             $table->id();
-            $table->double('dollar')->default(4500);
+            $table->unsignedBigInteger('provider_id');
+            $table->unsignedBigInteger('category_id');
+            $table->string('code');
+            $table->dateTime('date');
+            $table->string('type_of_sell')->comment('money - product');
+            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->double('amount');
             $table->timestamps();
         });
     }
@@ -27,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('app_settings');
+        Schema::dropIfExists('sells');
     }
 };

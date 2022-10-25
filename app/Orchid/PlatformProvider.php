@@ -48,9 +48,9 @@ class PlatformProvider extends OrchidServiceProvider
             //     ->icon('note')
             //     ->route('platform.example.fields'),
 
-            Menu::make('Advanced Elements')
-                ->icon('briefcase')
-                ->route('platform.example.advanced'),
+            // Menu::make('Advanced Elements')
+            //     ->icon('briefcase')
+            //     ->route('platform.example.advanced'),
 
             // Menu::make('Text Editors')
             //     ->icon('list')
@@ -94,6 +94,54 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('lock')
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles'),
+
+            Menu::make('Location')
+                ->icon('anchor')
+                ->list([
+                    Menu::make(__("Countries"))->url('/admin/crud/list/country-resources')->icon('bag'),
+                    Menu::make(__('Cities'))->url('/admin/crud/list/city-resources')->icon('bag'),
+                    Menu::make(__('Location'))->url('/admin/crud/list/location-resources')->icon('bag'),
+
+                ]),
+
+            Menu::make('General')
+                ->icon('directions')
+                ->list([
+                    Menu::make(__('Client Type'))->url('/admin/crud/list/client-type-resources')->icon('bag'),
+                    Menu::make(__('Location'))->url('/admin/crud/list/location-resources')->icon('bag'),
+                ]),
+
+            Menu::make('Users')
+                ->icon('people')
+                ->list([
+                    Menu::make(__("Providers"))->url('/admin/crud/list/provider-resources')->icon('bag'),
+                    Menu::make(__('Clients'))->url('/admin/crud/list/client-resources')->icon('bag'),
+                ]),
+
+            Menu::make('Products')
+                ->icon('organization')
+                ->list([
+                    Menu::make(__("Products"))->url('/admin/crud/list/product-resources')->icon('bag'),
+                    Menu::make(__('Categories'))->url('/admin/crud/list/category-resources')->icon('bag'),
+                    Menu::make(__("Unit"))->url('/admin/crud/list/unit-resources')->icon('bag'),
+
+                ]),
+            Menu::make('Prices')
+                ->icon('wallet')
+                ->list([
+                    Menu::make(__("Products Price"))->url('/admin/crud/list/product-price-resources')->icon('bag'),
+                    Menu::make(__('Categories Price'))->url('/admin/crud/list/category-price-resources')->icon('bag'),
+
+                ]),
+                
+            Menu::make('Sell')
+                ->icon('wallet')
+                ->list([
+                    Menu::make(__("Sell"))->url('/admin/crud/list/sell-resources')->icon('bag'),
+                    Menu::make(__("Product Sell"))->url('/admin/crud/list/product-sell-resources')->icon('bag'),
+
+                ]),
+
         ];
     }
 

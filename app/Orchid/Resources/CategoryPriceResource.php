@@ -5,24 +5,23 @@ namespace App\Orchid\Resources;
 use Orchid\Screen\TD;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Provider;
 use Orchid\Crud\Resource;
 use App\Models\AppSetting;
-use App\Models\ProductPrice;
+use App\Models\CategoryPrice;
 use Orchid\Screen\Fields\Input;
 use Orchid\Crud\ResourceRequest;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\Relation;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductPriceResource extends Resource
+class CategoryPriceResource extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ProductPrice::class;
+    public static $model = \App\Models\CategoryPrice::class;
     public static function displayInNavigation(): bool
     {
         return false;
@@ -39,22 +38,12 @@ class ProductPriceResource extends Resource
     public function fields(): array
     {
         return [
-            // Relation::make('provider_id')
-            //     ->fromModel(Provider::class, 'first_name', 'id')
-            //     ->empty(__('No select'))
-            //     ->title(__('Provider')),
-
-            // Relation::make('category_id')
-            //     ->fromModel(Category::class, 'name', 'id')
-            //     ->empty(__('No select'))
-            //     ->title(__('Category')),
-
-            Relation::make('product_id')
-                ->fromModel(Product::class, 'name', 'id')
-                ->displayAppend('full')
-                ->searchColumns('name')
+            Relation::make('category_id')
+                ->fromModel(Category::class, 'name', 'id')
                 ->empty(__('No select'))
-                ->title(__('Product')),
+                ->searchColumns('name')
+                ->title(__('Category')),
+
 
             Select::make('type')
                 ->title(__('Type'))
@@ -91,9 +80,9 @@ class ProductPriceResource extends Resource
         return [
             TD::make('id'),
 
-            TD::make('product_id', __("Category"))
+            TD::make('category_id', __("Category"))
                 ->render(function ($model) {
-                    return $model->product->name ?? "";
+                    return $model->category->name ?? "";
                 })->sort()->filter(TD::FILTER_SELECT),
 
             TD::make('type', __("type"))
@@ -104,7 +93,6 @@ class ProductPriceResource extends Resource
                     } elseif ($model->type == '2') { // خاص 
                         return 'خاص';
                     } elseif ($model->type == '3') { // جمله 
-
                         return 'جمله';
                     } elseif ($model->type == '4') { // نصف جمله 
                         return 'نصف جمله';
@@ -112,9 +100,9 @@ class ProductPriceResource extends Resource
                         return 'مفرق';
                     }
                 }),
-            TD::make('price_in_sp'),
+            TD::make('price_in_sp', __("price in sp")),
 
-            TD::make('price_in_dollar'),
+            TD::make('price_in_dollar', __("price in dollar")),
 
             TD::make('created_at', 'Date of creation')
                 ->render(function ($model) {
@@ -140,69 +128,26 @@ class ProductPriceResource extends Resource
 
     public function onSave(ResourceRequest $request, Model $model)
     {
-        //dd($request->all());
-        $price = $this->calculation($request->all());
-        $appSetting = AppSetting::first();
-        $product = Product::with('provider')->find($request['product_id']);
+        $products = Product::with('provider')->where('category_id', $request['category_id'])->get();
 
-        // if ($request->price_type == '1') { // مستهلك
-            $model->updateOrCreate([
-                'product_id' => $request->product_id,
+        foreach ($products as $key => $product) {
+
+            $price = $this->calculation($request->all(), $product);
+
+            $appSetting = AppSetting::first();
+
+            $model->create([
                 'provider_id' => $product->provider_id,
                 'category_id' => $product->category_id,
                 'type' => $request->price_type,
                 'price_in_sp' => $price,
                 'price_in_dollar' => $price / $appSetting->dollar,
-
-            ])->save();
-        // } elseif ($request->price_type == '2') { // خاص 
-        //     $model->forceFill([
-        //         'product_id' => $request->product_id,
-        //         'provider_id' => $request->provider_id,
-        //         'category_id' => $request->category_id,
-        //         'special_price_in_sp' => $price,
-        //         'special_price_in_dollar' => $price / $appSetting->dollar,
-
-        //     ])->save();
-        // } elseif ($request->price_type == '3') { // جمله 
-        //     $model->forceFill([
-        //         'product_id' => $request->product_id,
-        //         'provider_id' => $request->provider_id,
-        //         'category_id' => $request->category_id,
-        //         'consumer_price_in_sp' => $price,
-        //         'consumer_price_in_dollar' => $price / $appSetting->dollar,
-
-        //     ])->save();
-
-
-        //     $model->update([
-        //         'quantity_price_in_sp' => $price,
-        //         'quantity_price_in_dollar' => $price / $appSetting->dollar,
-        //     ]);
-        // } elseif ($request->price_type == '4') { // نصف جمله 
-        //     $model->forceFill([
-        //         'product_id' => $request->product_id,
-        //         'provider_id' => $request->provider_id,
-        //         'category_id' => $request->category_id,
-        //         'half_quantity_price_in_sp' => $price,
-        //         'half_quantity_price_in_dollar' => $price / $appSetting->dollar,
-
-        //     ])->save();
-        // } elseif ($request->price_type == '5') { // مفرق 
-        //     $model->forceFill([
-        //         'product_id' => $request->product_id,
-        //         'provider_id' => $request->provider_id,
-        //         'category_id' => $request->category_id,
-        //         'sale_price_in_sp' => $price,
-        //         'sale_price_in_dollar' => $price / $appSetting->dollar,
-
-        //     ])->save();
-       // }
+            ]);
+        }
     }
 
-    public function calculation($data)
+    public function calculation($data, $product)
     {
-        $product = Product::with('provider')->find($data['product_id']);
 
         if ($data['type'] == '1') { // خصم
             $newPrice = $product->price * $data['price'] / 100;
@@ -213,6 +158,7 @@ class ProductPriceResource extends Resource
         } elseif ($data['type'] == '3') { // قيمه 
             $data['price'] = $product->price + $data['price'];
         }
+
         return $data['price'];
     }
 

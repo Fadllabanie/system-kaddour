@@ -22,7 +22,7 @@ class CategoryResource extends Resource
     public static $model = \App\Models\Category::class;
     public static function displayInNavigation(): bool
     {
-        return true;
+        return false;
     }
     public static function perPage(): int
     {

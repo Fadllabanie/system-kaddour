@@ -22,23 +22,24 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('product_id')->references('id')->on('products');
 
-            $table->double('consumer_price_in_sp')->default(0);
-            $table->double('consumer_price_in_dollar')->default(0);
+            $table->string('type');
+            $table->double('price_in_sp')->default(0);
+            $table->double('price_in_dollar')->default(0);
             
-            $table->double('cost_price_in_sp_piece')->default(0);
-            $table->double('cost_price_in_dollar_piece')->default(0);
+            // $table->double('cost_price_in_sp_piece')->default(0);
+            // $table->double('cost_price_in_dollar_piece')->default(0);
 
-            $table->double('sale_price_in_sp')->default(0);
-            $table->double('sale_price_in_dollar')->default(0);
+            // $table->double('sale_price_in_sp')->default(0);
+            // $table->double('sale_price_in_dollar')->default(0);
 
-            $table->double('special_price_in_sp')->default(0);
-            $table->double('special_price_in_dollar')->default(0);
+            // $table->double('special_price_in_sp')->default(0);
+            // $table->double('special_price_in_dollar')->default(0);
             
-            $table->double('quantity_price_in_sp')->default(0);
-            $table->double('quantity_price_in_dollar')->default(0);
+            // $table->double('quantity_price_in_sp')->default(0);
+            // $table->double('quantity_price_in_dollar')->default(0);
             
-            $table->double('half_quantity_price_in_sp')->default(0);
-            $table->double('half_quantity_price_in_dollar')->default(0);
+            // $table->double('half_quantity_price_in_sp')->default(0);
+            // $table->double('half_quantity_price_in_dollar')->default(0);
 
             $table->timestamps();
         });

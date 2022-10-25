@@ -8,20 +8,19 @@ use Orchid\Attachment\Attachable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class CategoryPrice extends Model
+class ProductSell extends Model
 {
     use HasFactory;
     use AsSource, Filterable, Attachable;
 
     public $guarded = [];
 
- 
-    public function provider()
+    public function sell()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(Sell::class);
     }
-    public function category()
+    public function product()
     {
-        return $this->belongsTo(Category::class);
-    } 
+        return $this->belongsTo(Product::class);
+    }
 }
