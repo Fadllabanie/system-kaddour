@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Orchid\Screens;
 
 use Orchid\Screen\Screen;
+use Orchid\Screen\Actions\Button;
 use Orchid\Support\Facades\Layout;
 use App\Orchid\Layouts\ChartsLayout;
 use App\Orchid\Layouts\Examples\ChartBarExample;
