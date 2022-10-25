@@ -183,12 +183,16 @@ class ProductResource extends Resource
     }
     public function onSave(ResourceRequest $request, Model $model)
     {
+
+
         if(app()->environment('production')){
             $path =  'public/uploads/' . Hash::make('123') . '.jpg';
+
         }else{
             $path =  'uploads/' . Hash::make('123') . '.jpg';
 
         }
+
         $model->forceFill([
             'code' => generateRandomCode('PRO'),
             'name' => $request->name,
