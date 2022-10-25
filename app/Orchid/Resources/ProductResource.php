@@ -207,7 +207,7 @@ class ProductResource extends Resource
             'made' => $request->made,
             'provider_id' => $request->provider_id,
             'category_id' => $request->category_id,
-            'image' => $path,
+            'image' => 'public/'.$path,
         ])->save();
 
         
