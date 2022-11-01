@@ -65,6 +65,24 @@ class ProductResource extends Resource
             TextArea::make('description')
                 ->rows(5),
 
+
+            Relation::make('unit')
+                ->fromModel(Unit::class, 'name', 'id')
+                ->empty(__('No select'))
+                ->title(__('Unit')),
+
+            Select::make('currency')
+                ->title(__('Currency'))
+                ->options([
+                    '$'   => '$',
+                    'sp' => 'SP',
+                ]),
+
+            Input::make('price')
+                ->title(__('price'))
+                ->type('number')
+                ->placeholder(__('Enter price here')),
+
             Input::make('version')
                 ->title(__('Version'))
                 ->placeholder(__('Enter version here')),
@@ -81,34 +99,13 @@ class ProductResource extends Resource
                 ->title(__('made'))
                 ->placeholder(__('Enter made here')),
 
-            Input::make('price')
-                ->title(__('price'))
-                ->type('number')
-                ->placeholder(__('Enter price here')),
+
 
             Input::make('count')
                 ->title(__('Count'))
                 ->placeholder(__('Enter count here')),
 
 
-            Relation::make('unit')
-            ->fromModel(Unit::class, 'name', 'id')
-            ->empty(__('No select'))
-            ->title(__('Unit')),
-
-            // Select::make('unit')
-            //     ->title(__('Unit'))
-            //     ->options([
-            //         'kg'   => 'KG',
-            //         'm' => 'M',
-            //     ]),
-
-            Select::make('currency')
-                ->title(__('Currency'))
-                ->options([
-                    '$'   => '$',
-                    'sp' => 'SP',
-                ]),
 
 
 
@@ -126,9 +123,14 @@ class ProductResource extends Resource
             TD::make('id')
                 ->width('150')
                 ->render(function ($model) {
-                    return "<img src='" . asset($model->image) . "'
-                  alt='sample'
-                  class='mw-100 d-block img-fluid'>";
+                    if($model->image){
+                        return "<img src='" . asset($model->image) . "'
+                        alt='sample'
+                        class='mw-100 d-block img-fluid'>";
+                    }else{
+                        return "no image";
+                    }
+                   
                 }),
             TD::make('name'),
             TD::make('provider_id', __("Provider"))
@@ -165,17 +167,17 @@ class ProductResource extends Resource
     {
         return [
             'name' => ['required'],
-            'description' => ['required'],
+            'description' => ['nullable'],
             'unit' => ['required'],
             'price' => ['required'],
             'currency' => ['required'],
             'description' => ['required'],
-            'count' => ['required'],
-            'version' => ['required'],
-            'barcode' => ['required'],
-            'made' => ['required'],
-            'model' => ['required'],
-            'image' => ['required'],
+            'count' => ['nullable'],
+            'version' => ['nullable'],
+            'barcode' => ['nullable'],
+            'made' => ['nullable'],
+            'model' => ['nullable'],
+            'image' => ['nullable'],
             'provider_id' => ['required'],
             'category_id' => ['required'],
 
@@ -183,39 +185,33 @@ class ProductResource extends Resource
     }
     public function onSave(ResourceRequest $request, Model $model)
     {
-
-
-        if(app()->environment('production')){
-            $path =  'public/uploads/' . Hash::make('123') . '.jpg';
-
-        }else{
-            $path =  'uploads/' . Hash::make('123') . '.jpg';
-
+        if ($request->image) {
+        $path =  'uploads/' . Hash::make('123') . '.jpg';
         }
-
         $model->forceFill([
             'code' => generateRandomCode('PRO'),
             'name' => $request->name,
             'description' => $request->description,
             'unit' => $request->unit,
-            'count' => $request->count,
-            'model' => $request->model,
+            'count' => $request->count ?? 1,
+            'model' => $request->model ?? 1,
             'price' => $request->price,
             'currency' => $request->currency,
-            'version' => $request->version,
-            'barcode' => $request->barcode,
-            'made' => $request->made,
+            'version' => $request->version ?? 1,
+            'barcode' => $request->barcode ?? 1,
+            'made' => $request->made ?? 1,
             'provider_id' => $request->provider_id,
             'category_id' => $request->category_id,
-            'image' => 'public/'.$path,
+            'image' => $path ?? "",
         ])->save();
 
-        
-        \File::copy(
-            storage_path('/app' . substr($request->image, 8)),
-            public_path($path)
-        );
-      
+        if ($request->image) {
+            \File::copy(
+                storage_path('/app' . substr($request->image, 8)),
+                public_path($path)
+            );
+        }
+
     }
 
     /**

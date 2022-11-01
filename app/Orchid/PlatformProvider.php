@@ -121,7 +121,7 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Products')
                 ->icon('organization')
                 ->list([
-                    Menu::make(__("Products"))->url('/admin/crud/list/product-resources')->icon('bag'),
+                    Menu::make(__("Products"))->url('/admin/crud/list/product-resources')->icon('bag')->name('products'),
                     Menu::make(__('Categories'))->url('/admin/crud/list/category-resources')->icon('bag'),
                     Menu::make(__("Unit"))->url('/admin/crud/list/unit-resources')->icon('bag'),
 
@@ -134,11 +134,11 @@ class PlatformProvider extends OrchidServiceProvider
 
                 ]),
                 
-            Menu::make('Sell')
+            Menu::make('Purchases')
                 ->icon('wallet')
                 ->list([
-                    Menu::make(__("Sell"))->url('/admin/crud/list/sell-resources')->icon('bag'),
-                    Menu::make(__("Product Sell"))->url('/admin/crud/list/product-sell-resources')->icon('bag'),
+                    Menu::make(__("Purchases"))->url('/admin/crud/list/sell-resources')->icon('bag'),
+                    Menu::make(__("Product Purchases"))->url('/admin/crud/list/product-sell-resources')->icon('bag'),
 
                 ]),
 

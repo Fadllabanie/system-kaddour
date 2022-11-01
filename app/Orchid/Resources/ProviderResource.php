@@ -200,20 +200,22 @@ class ProviderResource extends Resource
             'country_id' => ['required'],
             'city_id' => ['required'],
             'location_id' => ['required'],
-            'address' => ['required'],
+            'address' => ['nullable'],
             'client_type_id' => ['required'],
             'currency' => ['required'],
-            'dealing_way' => ['required'],
-            'dealing_number' => ['required'],
-            'website' => ['required'],
+            'dealing_way' => ['nullable'],
+            'dealing_number' => ['nullable'],
+            'website' => ['nullable'],
             'logo' => ['required'],
             'whatsapp' => ['required'],
         ];
     }
     public function onSave(ResourceRequest $request, Model $model)
-    {
-        $path =  'uploads/' . Hash::make('123') . '.jpg';
+    {       
+         if ($request->image) {
 
+        $path =  'uploads/' . Hash::make('123') . '.jpg';
+    }
         $model->forceFill([
             'code' => generateRandomCode('CLI'),
             'first_name' => $request->first_name,
@@ -223,7 +225,7 @@ class ProviderResource extends Resource
             'phone' => $request->phone,
             'mobile' => $request->mobile,
             'tel' => $request->tel,
-            'address' => $request->address,
+            'address' => $request->address ?? "no",
             'password' => bcrypt($request->password),
             'lat' => $request->place['lat'],
             'lng' => $request->place['lng'],
@@ -231,17 +233,20 @@ class ProviderResource extends Resource
             'country_id' => $request->country_id,
             'city_id' => $request->city_id,
             'location_id' => $request->location_id,
-            'dealing_way' => $request->dealing_way,
-            'dealing_number' => $request->dealing_number,
-            'website' => $request->website,
-            'logo' => $path,
+            'dealing_way' => $request->dealing_way?? "no",
+            'dealing_number' => $request->dealing_number ?? "no",
+            'website' => $request->website ?? "no",
+            'logo' => $path ?? "",
             'whatsapp' => $request->whatsapp,
         ])->save();
-        
+        if ($request->image) {
+
         \File::copy(
             storage_path('/app' . substr($request->logo, 8)),
             public_path($path)
         );
+        
+    }
     }
     /**
      * Get the filters available for the resource.

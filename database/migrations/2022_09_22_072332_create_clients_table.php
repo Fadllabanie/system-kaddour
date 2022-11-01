@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('logo');
             $table->string('website');
             $table->string('whatsapp');
-            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('location_id');
@@ -35,8 +34,8 @@ return new class extends Migration
             $table->char('currency');
             $table->decimal('lat', 12, 8);
             $table->decimal('lng', 12, 8);
-            $table->string('dealing_way');
-            $table->double('dealing_number');
+            $table->string('dealing_way')->nullable();
+            $table->double('dealing_number')->nullable();
 
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('country_id')->references('id')->on('countries');

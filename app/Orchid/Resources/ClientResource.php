@@ -2,10 +2,10 @@
 
 namespace App\Orchid\Resources;
 
-use App\Models\Category;
 use App\Models\City;
 use Orchid\Screen\TD;
 use App\Models\Country;
+use App\Models\Category;
 use App\Models\Location;
 use Orchid\Screen\Sight;
 use Orchid\Crud\Resource;
@@ -16,6 +16,7 @@ use Orchid\Crud\ResourceRequest;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Picture;
+use Illuminate\Support\Facades\DB;
 use Orchid\Screen\Fields\Relation;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
@@ -106,6 +107,8 @@ class ClientResource extends Resource
             Relation::make('category_id')
                 ->fromModel(Category::class, 'name', 'id')
                 ->empty(__('No select'))
+                ->multiple()
+
                 ->title(__('Category')),
 
             Relation::make('client_type_id')
@@ -205,18 +208,22 @@ class ClientResource extends Resource
             'category_id' => ['required'],
             'city_id' => ['required'],
             'location_id' => ['required'],
-            'address' => ['required'],
+            'address' => ['nullable'],
             'client_type_id' => ['required'],
             'currency' => ['required'],
-            'website' => ['required'],
-            'logo' => ['required'],
+            'website' => ['nullable'],
+            'logo' => ['nullable'],
             'whatsapp' => ['required'],
         ];
     }
     public function onSave(ResourceRequest $request, Model $model)
     {
-        $path =  'uploads/' . Hash::make('123') . '.jpg';
+        if ($request->logo) {
 
+        $path =  'uploads/' . Hash::make('123') . '.jpg';
+        }
+
+      //  dd($request->all());
         $model->forceFill([
             'code' => generateRandomCode('CLI'),
             'first_name' => $request->first_name,
@@ -226,24 +233,33 @@ class ClientResource extends Resource
             'phone' => $request->phone,
             'mobile' => $request->mobile,
             'tel' => $request->tel,
-            'address' => $request->address,
+            'address' => $request->address ?? "no",
             'password' => bcrypt($request->password),
             'lat' => $request->place['lat'],
             'lng' => $request->place['lng'],
             'client_type_id' => $request->client_type_id,
-            'category_id' => $request->category_id,
+          //  'category_id' => $request->category_id,
             'country_id' => $request->country_id,
             'city_id' => $request->city_id,
             'location_id' => $request->location_id,
-            'website' => $request->website,
-            'logo' => $path,
+            'website' => $request->website ?? "no",
+            'logo' => $path ?? "",
             'whatsapp' => $request->whatsapp,
         ])->save();
+
+        foreach ($request->category_id as $key => $category_id) {
+            DB::table('client_category')->insert([
+                'client_id' => $model->id,
+                'category_id' => $category_id,
+            ]);
+            }
+        if ($request->logo) {
 
         \File::copy(
             storage_path('/app' . substr($request->logo, 8)),
             public_path($path)
         );
+    }
     }
     /**
      * Get the filters available for the resource.
