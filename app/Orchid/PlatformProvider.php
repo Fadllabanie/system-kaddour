@@ -84,7 +84,12 @@ class PlatformProvider extends OrchidServiceProvider
             //     }, Color::DARK()),
 
 
-            Menu::make(__('Users'))
+            // Menu::make(__('invoicing'))
+            //     ->icon('user')
+            //     ->route('platform.invoicing')
+            //     ->title(__('invoicing')), 
+                
+                Menu::make(__('Users'))
                 ->icon('user')
                 ->route('platform.systems.users')
                 ->permission('platform.systems.users')
@@ -139,6 +144,14 @@ class PlatformProvider extends OrchidServiceProvider
                 ->list([
                     Menu::make(__("Purchases"))->url('/admin/crud/list/sell-resources')->icon('bag'),
                     Menu::make(__("Product Purchases"))->url('/admin/crud/list/product-sell-resources')->icon('bag'),
+
+                ]), 
+                
+                Menu::make('Invoicing')
+                ->icon('wallet')
+                ->list([
+                    Menu::make(__("Invoicing"))->route('platform.list.invoicing')->icon('bag'),
+                    Menu::make(__("Invoicing Create"))->route('platform.invoicing')->icon('bag'),
 
                 ]),
 

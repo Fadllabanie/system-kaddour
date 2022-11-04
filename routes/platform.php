@@ -2,22 +2,24 @@
 
 declare(strict_types=1);
 
-use App\Orchid\Screens\Examples\ExampleCardsScreen;
-use App\Orchid\Screens\Examples\ExampleChartsScreen;
-use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
-use App\Orchid\Screens\Examples\ExampleFieldsScreen;
-use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
-use App\Orchid\Screens\Examples\ExampleScreen;
-use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use Tabuna\Breadcrumbs\Trail;
+use Illuminate\Support\Facades\Route;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\InvoicingScreen;
+use App\Orchid\Resources\ProductResource;
+use App\Orchid\Screens\InvoicingListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
+use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
-use Illuminate\Support\Facades\Route;
-use Tabuna\Breadcrumbs\Trail;
-use App\Orchid\Resources\ProductResource;
+use App\Orchid\Screens\Examples\ExampleCardsScreen;
+use App\Orchid\Screens\Examples\ExampleChartsScreen;
+use App\Orchid\Screens\Examples\ExampleFieldsScreen;
+use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
+use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,5 +115,7 @@ Route::screen('example-editors', ExampleTextEditorsScreen::class)->name('platfor
 Route::screen('example-cards', ExampleCardsScreen::class)->name('platform.example.cards');
 Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
 
+Route::screen('list-invoicing', InvoicingListScreen::class)->name('platform.list.invoicing');
+Route::screen('invoicing', InvoicingScreen::class)->name('platform.invoicing');
 
 //Route::screen('idea', Idea::class, 'platform.screens.idea');

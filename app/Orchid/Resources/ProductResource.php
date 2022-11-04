@@ -105,10 +105,6 @@ class ProductResource extends Resource
                 ->title(__('Count'))
                 ->placeholder(__('Enter count here')),
 
-
-
-
-
         ];
     }
 

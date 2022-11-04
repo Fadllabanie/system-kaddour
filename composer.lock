@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cb3dc394a774e9088d3c160c36ff701",
+    "content-hash": "384c9b992f587b485d337e23e0a680a2",
     "packages": [
         {
             "name": "brick/math",
@@ -1847,6 +1847,67 @@
                 }
             ],
             "time": "2022-08-04T09:53:51+00:00"
+        },
+        {
+            "name": "nakukryskin/orchid-repeater-field",
+            "version": "13.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nks/orchid-repeater-field.git",
+                "reference": "bc1e7e50f179270d681e696e1539ca378350c7bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nks/orchid-repeater-field/zipball/bc1e7e50f179270d681e696e1539ca378350c7bf",
+                "reference": "bc1e7e50f179270d681e696e1539ca378350c7bf",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^9.21",
+                "orchid/platform": "^13.0.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.8",
+                "mockery/mockery": "^1.1",
+                "phpunit/phpunit": "^9.0",
+                "sempro/phpunit-pretty-print": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nakukryskin\\OrchidRepeaterField\\Providers\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nakukryskin\\OrchidRepeaterField\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "wtfpl"
+            ],
+            "authors": [
+                {
+                    "name": "Vladislav Zhdanov",
+                    "email": "v.jdanov@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Adding support of repeater field to the Orchid RAD platform.",
+            "homepage": "https://github.com/nakukryskin/orchid-repeater-field",
+            "keywords": [
+                "Orchid Repeater Field",
+                "laravel",
+                "repeater field"
+            ],
+            "support": {
+                "issues": "https://github.com/Nks/orchid-repeater-field/issues",
+                "source": "https://github.com/Nks/orchid-repeater-field/tree/13.0.2"
+            },
+            "time": "2022-08-24T13:36:03+00:00"
         },
         {
             "name": "nesbot/carbon",
